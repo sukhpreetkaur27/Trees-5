@@ -35,7 +35,12 @@ public class MorrisInOrderTraversal {
     }
 
     /**
-     * TC: O(2n), we are processing the nodes twice due to thread creation.
+     * TC: O(n).
+     * <p>
+     * For thread creation, the avg TC = O(1)
+     * as Level 1 with the least # of nodes i.e. 1, takes at max h iterations
+     * and Level h with the max nodes (leaf nodes) takes at max 0 iteration.
+     * Hence, Overall TC: O(n) just for visiting or processing each node.
      * SC: O(1)
      *
      * @param root
