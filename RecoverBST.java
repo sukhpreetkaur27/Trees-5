@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 // LC 99
 public class RecoverBST {
 
@@ -43,9 +47,9 @@ public class RecoverBST {
     }
 
     private void swap(TreeNode first, TreeNode second) {
-        TreeNode temp = new TreeNode(first.val);
+        int temp = first.val;
         first.val = second.val;
-        second.val = temp.val;
+        second.val = temp;
     }
 
     private void inorder(TreeNode root, TreeNode[] prev, TreeNode[] first, TreeNode[] second) {
@@ -62,4 +66,45 @@ public class RecoverBST {
         prev[0] = root;
         inorder(root.right, prev, first, second);
     }
+
+    /**
+     * If more than 2 elements are swapped, then we follow the brute force.
+     * <p>
+     * Find the inOrder traversal of the tree.
+     * Sort it.
+     * Perform the inorder traversal and compare it with the sorted version on the fly.
+     * <p>
+     * TC: O(n log n) + O(n)
+     * SC: O(n + h)
+     *
+     * @param root
+     */
+    public void recoverTree_moreThan2ElementsSwapped(TreeNode root) {
+        List<Integer> order = new ArrayList<>();
+        inorder(root, order);
+        Collections.sort(order);
+        inorder(root, new int[]{0}, order);
+    }
+
+    private void inorder(TreeNode root, int[] index, List<Integer> order) {
+        if (root == null) {
+            return;
+        }
+        inorder(root.left, index, order);
+        if (order.get(index[0]) != root.val) {
+            root.val = order.get(index[0]);
+        }
+        index[0]++;
+        inorder(root.right, index, order);
+    }
+
+    private void inorder(TreeNode root, List<Integer> order) {
+        if (root == null) {
+            return;
+        }
+        inorder(root.left, order);
+        order.add(root.val);
+        inorder(root.right, order);
+    }
+
 }
