@@ -53,7 +53,7 @@ public class RecoverBST {
             return;
         }
         inorder(root.left, prev, first, second);
-        if (prev[0].val > root.val) {
+        if (prev[0] != null && prev[0].val > root.val) {
             if (first[0] == null) {
                 first[0] = prev[0];
             }
